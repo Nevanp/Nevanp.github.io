@@ -4,8 +4,8 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
-let x = 50;
-let y = 50;
+let x = 100;
+let y = 100;
 let ySpeed = 5;
 let xSpeed = 5;
 function setup() {
@@ -27,5 +27,5 @@ if(keyIsDown(DOWN_ARROW)){
 if(keyIsDown(UP_ARROW)){
  y = y - ySpeed;
 }
-    ellipse(x, y, 50, 50);
+  ellipse(x, y, 50, 50);
 }
