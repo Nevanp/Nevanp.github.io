@@ -13,6 +13,18 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 }
 
+function flashWord (){
+  if (second() % 2 !== 0){
+    textSize(100);
+    fill(255, 0, 255);
+    text("Click to Start", width/2 - 300, height/2);
+  }
+  else{
+    background(220);
+  }
+
+}
+
 function gameStart(){ //This makes startscreen and starts game
   if(mouseIsPressed){
     mouseClick = true;
@@ -22,9 +34,7 @@ function gameStart(){ //This makes startscreen and starts game
   }
 
   else{
-    textSize(100);
-    text("Click to Start", 40, height/2);
-    fill(255, 0, 255);
+    flashWord();
   }
 }
 
