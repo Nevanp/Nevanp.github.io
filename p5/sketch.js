@@ -13,7 +13,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 }
 
-function flashWord (){
+function flashWord (){ // make word flash in start screen
   if (second() % 2 !== 0){
     textSize(100);
     fill(255, 0, 255);
@@ -30,7 +30,7 @@ function gameStart(){ //This makes startscreen and starts game
     mouseClick = true;
   }
   if(mouseClick){
-    triangle(mouseX, mouseY - 10, mouseX + 10 ,mouseY + 10, mouseX - 10, mouseY + 10);
+    rect(mouseX - 5, mouseY - 5, 10, 10);
   }
 
   else{
