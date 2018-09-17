@@ -8,10 +8,21 @@
 let death = false;
 let powerup = 0;
 let mouseClick = false;
+let powerUp = false;
+let powerLoading = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
+
+function powerTime(){ // load power up for game
+	if (powerUp === false){
+		powerloading = frameCount % 300;
+		fill(255, 0, 0, powerLoading);
+		ellipse(10,10, 10, 10);
+	}
+}
+
 
 function flashWord (){ // make word flash in start screen
   if (second() % 2 !== 0){
@@ -24,13 +35,20 @@ function flashWord (){ // make word flash in start screen
   }
 
 }
+function game(){
+	//rectMode(CENTER);
+		//translate(-(width/2), -(height/2));
+		//rotate(PI/ 3.0);
+    rect(mouseX - 5, mouseY - 5, 10, 10);
+	powerTime();
+}
 
-function gameStart(){ //This makes startscreen and starts game
+function gameStart(){ //This makes the startscreen and starts game
   if(mouseIsPressed){
     mouseClick = true;
   }
   if(mouseClick){
-    rect(mouseX - 5, mouseY - 5, 10, 10);
+		game();
   }
 
   else{
