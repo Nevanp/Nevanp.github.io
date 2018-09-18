@@ -1,6 +1,6 @@
 // Project Title
-// Your Name
-// Date
+// Nevan
+// 9/18/18
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
@@ -10,6 +10,7 @@ let powerup = 0;
 let mouseClick = false;
 let powerUp = false;
 let powerLoading = 0;
+let boom = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -17,10 +18,23 @@ function setup() {
 
 function powerTime(){ // load power up for game
 	if (powerUp === false){
-		powerloading = frameCount % 300;
+		powerLoading = frameCount % 1000;
 		fill(255, 0, 0, powerLoading);
-		ellipse(10,10, 10, 10);
-	}
+    noStroke();
+		ellipse(25,25, 50, 50);
+    if( frameCount % 1000 === 0){
+      powerUp = true;
+    }
+  }
+  else{
+      fill(0, 255, 0);
+      noStroke();
+      ellipse(25,25,50,50)
+      if(mouseIsPressed){
+        powerUp = false;
+        boom = true
+      }
+  }
 }
 
 
@@ -39,7 +53,8 @@ function game(){
 	//rectMode(CENTER);
 		//translate(-(width/2), -(height/2));
 		//rotate(PI/ 3.0);
-    rect(mouseX - 5, mouseY - 5, 10, 10);
+    fill(10, 10 , 10)
+    rect(pmouseX - 5, pmouseY - 5, 10, 10);
 	powerTime();
 }
 
