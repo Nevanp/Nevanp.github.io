@@ -49,12 +49,14 @@ function flashWord (){ // make word flash in start screen
   }
 
 }
+
 function game(){
 	//rectMode(CENTER);
 		//translate(-(width/2), -(height/2));
 		//rotate(PI/ 3.0);
-    fill(10, 10 , 10)
-    rect(pmouseX - 5, pmouseY - 5, 10, 10);
+      fill(10, 10 , 10);
+    rectMode(CENTER);
+    rect(pmouseX, pmouseY, 10, 10);
 	powerTime();
 }
 
