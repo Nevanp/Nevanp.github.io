@@ -10,10 +10,22 @@ let powerup = 0;
 let mouseClick = false;
 let powerUp = false;
 let powerLoading = 0;
-let boom = false;
+let powerCounter= 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+}
+
+function boom(){
+  if( powerCounter < 60){
+  stroke(0);
+  noFill();
+  ellipse(mouseX, mouseY, 50, 50);
+  powerCounter += 1;
+  }
+  else{
+    powerUp = false;
+  }
 }
 
 function powerTime(){ // load power up for game
@@ -29,12 +41,10 @@ function powerTime(){ // load power up for game
   else{
       fill(0, 255, 0);
       noStroke();
-      ellipse(25,25,50,50)
-      if(mouseIsPressed){
-        powerUp = false;
-        boom = true
+      ellipse(25,25,50,50);
+      boom();
       }
-  }
+
 }
 
 
@@ -54,7 +64,7 @@ function game(){
 	//rectMode(CENTER);
 		//translate(-(width/2), -(height/2));
 		//rotate(PI/ 3.0);
-      fill(10, 10 , 10);
+    fill(10, 10 , 10);
     rectMode(CENTER);
     rect(pmouseX, pmouseY, 10, 10);
 	powerTime();
