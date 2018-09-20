@@ -11,17 +11,21 @@ let mouseClick = false;
 let powerUp = false;
 let powerLoading = 0;
 let powerCounter= 0;
-let ballX = random(50, width);
-let ballY = random(50, width);
-let ballxSpeed = random(3,5);
-let ballySpeed = random(3, 5);
+let ballX;
+let ballY;
+let ballxSpeed;
+let ballySpeed;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  ballX = random(50, width);
+  ballY = random(50, height);
+  ballxSpeed = random( 3, 5);
+  ballySpeed = random(3, 5);
 }
 
 function ball(){
-  if((ballX < (windowWidth + 50) && ballY < (windowHeight + 50)) && ((ballX +50) > 0 && (ballY +50) > 0)){
+  if((ballX < (windowWidth + 50) && ballY < windowHeight + 50) && ((ballX +50 && (ballY +50) > 0)){
     ballX += ballxSpeed;
     ballY += ballySpeed;
     fill(10, 10, 100);

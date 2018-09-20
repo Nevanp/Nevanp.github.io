@@ -5,6 +5,13 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+// Project Title
+// Nevan
+// 9/18/18
+//
+// Extra for Experts:
+// - describe what you did to take this project "above and beyond"
+
 let death = false;
 let powerup = 0;
 let mouseClick = false;
