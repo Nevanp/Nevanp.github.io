@@ -18,28 +18,86 @@ let mouseClick = false;
 let powerUp = false;
 let powerLoading = 0;
 let powerCounter= 0;
-let ballX = random(50, width);
-let ballY = random(50, width);
-let ballxSpeed = random(3,5);
-let ballySpeed = random(3, 5);
+let ballX;
+let ballY;
+let ballxSpeed;
+let ballySpeed;
+let speedUnit = -1.05;
+let ballInfo = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  ballX = {
+    one: random(50,width),
+    two: random(50, width)
+  };
+  ballY ={
+     one: random(50, height),
+     two: random(50, height)
+   };
+
+  ballxSpeed ={
+    one: random(3,5),
+    two: random(3,5)
+  };
+  ballySpeed ={
+  one: random(3,5),
+  two: random(3, 5)
+};
+ballInfo.push(ballX, ballY, ballxSpeed, ballySpeed)
+
+ball = {
+  x: 100,
+  y: 4300,
+  xSpeed: 12
+};
+}
+}
+
+}
+
+function deathTest(){
+
+  for (let i = 0; i < ballInfo.length ; i++) {
+    if (ballInfo[i].one + 25 >= mouseX && ballInfo[i].y )
+  }
+
+
+  // if(ballInfo[0].one + 25 >= mouseX && ballInfo[1].one + 25 >= mouseY && ballInfo[0].one - 25 <= mouseX && ballInfo[1].one -25 <= mouseY || ballInfo[0].two + 25 >= mouseX && ballInfo[1].two + 25 >= mouseY && ballInfo[0].two - 25 <= mouseX && ballInfo[1].two -25 <= mouseY){
+  //   death = true;
+  // }
+}
+
+function gameOver(){
+  if (second() % 2 !== 0){
+    textSize(100);
+    fill(255, 0, 0);
+    text("Game Over", width/2 - 300, height/2);
+  }
+  else{
+    background(220);
+  }
 }
 
 function ball(){
-  if((ballX < (windowWidth + 50) && ballY < (windowHeight + 50)) && ((ballX +50) > 0 && (ballY +50) > 0)){
+  if((ballX < (windowWidth + 50) && ballY < (windowHeight + 50)) && ((ballX + 50) > 0 && (ballY + 50) > 0)){
     ballX += ballxSpeed;
     ballY += ballySpeed;
     fill(10, 10, 100);
     ellipse(ballX, ballY, 50);
   }
-  if (ballY >= windowHeight || ballY <= 0) {
-    ballySpeed = ballySpeed * -1;
+  if (ballY + 25 >= windowHeight || ballY - 25 <= 0) {
+    ballySpeed = ballySpeed * speedUnit;
   }
-  if (ballX >= windowWidth || ballX <= 0) {
-    ballxSpeed = ballxSpeed * -1;
+  if (ballX + 25 >= windowWidth || ballX - 25 <= 0) {
+    ballxSpeed = ballxSpeed * speedUnit;
   }
+  if(ballxSpeed > 100 || ballySpeed > 100 ){
+    speedUnit = -0.95;
+  }
+  else{
+    speedUnit = -1.05;
+    }
 }
 
 function boom(){
@@ -104,6 +162,7 @@ function gameStart(){ //This makes the startscreen and starts game
   }
   if(mouseClick){
 		game();
+    deathTest();
   }
 
   else{
@@ -115,5 +174,8 @@ function draw() {
   background(220);
   if( death === false){
     gameStart();
+  }
+  else{
+    gameOver();
   }
 }
