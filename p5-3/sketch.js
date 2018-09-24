@@ -32,10 +32,10 @@ function ball(){
     ellipse(ballX, ballY, 50);
   }
   if (ballY >= windowHeight || ballY <= 0) {
-    ballySpeed = ballySpeed * -1;
+    ballySpeed = ballySpeed * speedUnit;
   }
   if (ballX >= windowWidth || ballX <= 0) {
-    ballxSpeed = ballxSpeed * -1;
+    ballxSpeed = ballxSpeed * speedUnit;
   }
 }
 
