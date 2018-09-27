@@ -7,18 +7,31 @@
 let i = 0;
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  background(0);
 }
 
 function draw() {
   rectMode(CENTER);
-  background(0,0,0);
+
   translate(mouseX, mouseY);
-  mouseClicked();
-  rotate(i);
-  rect(0,0,20,20);
-}
-function mouseClicked(){
-  for (i = 0; i < PI; i += PI / 4){
-    i += PI / 4;
+  if (mouseIsPressed){
+    if(i < PI*2){
+      i += 0.1;
+    }
+    else{
+      i = 0;
+    }
+    rotate(i);
+    rect(0 , 0, 200, 200);
   }
+  // else{
+  //   rotate(i);
+  //   rect(0,0,200,200);
+  // }
 }
+// function mousePressed(){
+//   for (let i = 0; i < PI*2; i += PI / 4){
+//     rotate(i);
+//     rect(0 , 0, 20, 20);
+//   }
+// }
