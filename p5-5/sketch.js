@@ -57,9 +57,19 @@ function stocks(){
 }
 
 function menu(){
+  let side1 = 150;
+  let side2 = 150;
   noStroke();
-  fill(150);
+  if(mouseX < width/2){
+    side1 = 200;
+    side2 = 150;
+  }
+  else{
+    side1 = 150;
+    side2 = 200;
+  }
+  fill(side1);
   rect(0, 0, width/2, height);
-  fill(150);
+  fill(side2);
   rect(width/2,0, width/2,height);
 }
