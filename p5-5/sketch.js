@@ -9,6 +9,10 @@ let pointchange;
 let x = 0;
 let point2;
 let x2 = 10;
+let average = 0;
+let it = 0;
+let ave = 0;
+let state = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -17,11 +21,16 @@ function setup() {
 }
 
 function draw() {
-  graph();
   frameRate(10);
   pointchange = random(-30, 30);
   point2 = point + pointchange;
-  stocks();
+  if(state === 0){
+    menu();
+  }
+  if(state === 1){
+    graph();
+    stocks();
+  }
   if(x > width){
     background("black");
     x = 0;
@@ -37,10 +46,20 @@ function graph(){
 }
 function stocks(){
   if (point2 < height && point2 > 0){
+    push();
     stroke(0,255, 0);
     line(x, point, x2, point2);
     x = x2;
     x2 += 10;
     point= point2;
+    it++;
   }
+}
+
+function menu(){
+  noStroke();
+  fill(150);
+  rect(0, 0, width/2, height);
+  fill(150);
+  rect(width/2,0, width/2,height);
 }
