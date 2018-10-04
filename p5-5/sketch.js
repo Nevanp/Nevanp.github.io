@@ -9,9 +9,6 @@ let pointchange;
 let x = 0;
 let point2;
 let x2 = 10;
-let average = 0;
-let it = 0;
-let ave = 0;
 let state = 0;
 
 function setup() {
@@ -22,14 +19,16 @@ function setup() {
 
 function draw() {
   frameRate(10);
-  pointchange = random(-30, 30);
-  point2 = point + pointchange;
   if(state === 0){
     menu();
   }
   if(state === 1){
     graph();
     stocks();
+  }
+  if(state === 2){
+    graph();
+    stock2();
   }
   if(x > width){
     background("black");
@@ -45,14 +44,26 @@ function graph(){
   }
 }
 function stocks(){
+  pointchange = random(-30, 30);
+  point2 = point + pointchange;
   if (point2 < height && point2 > 0){
-    push();
     stroke(0,255, 0);
     line(x, point, x2, point2);
     x = x2;
     x2 += 10;
     point= point2;
-    it++;
+  }
+}
+
+function stock2(){
+  pointchange = random(-35, 50);
+  point2 = point + pointchange;
+  if (point2 < height && point2 > 0){
+    stroke(0, 0, 255);
+    line(x, point, x2, point2);
+    x = x2;
+    x2 += 10;
+    point= point2;
   }
 }
 
@@ -72,4 +83,23 @@ function menu(){
   rect(0, 0, width/2, height);
   fill(side2);
   rect(width/2,0, width/2,height);
+  textAlign(CENTER);
+  fill(0);
+  textSize(100);
+  text("Safe Stock", width/1.25, height/2);
+  fill(0);
+  text("Risky Stock", width/4, height/2);
+
+
+}
+
+function mouseClicked(){
+  if(mouseX > width/2){
+    state = 1;
+    background(0);
+  }
+  else if(mouseX < width/2){
+    state = 2;
+    background(0);
+  }
 }
