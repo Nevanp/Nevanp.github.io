@@ -68,20 +68,21 @@ function stock2(){
 }
 
 function menu(){
-  let side1 = 150;
-  let side2 = 150;
+  background(255);
+  let side1 = 50;
+  let side2 = 50;
   noStroke();
   if(mouseX < width/2){
-    side1 = 200;
-    side2 = 150;
+    side1 = 100;
+    side2 = 50;
   }
   else{
-    side1 = 150;
-    side2 = 200;
+    side1 = 50;
+    side2 = 100;
   }
-  fill(side1);
+  fill(0,0, 255, side1);
   rect(0, 0, width/2, height);
-  fill(side2);
+  fill(0,0, 255, side2);
   rect(width/2,0, width/2,height);
   textAlign(CENTER);
   fill(0);
