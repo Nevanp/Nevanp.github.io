@@ -29,6 +29,7 @@ module.exports = {
         "no-unused-vars": "off"
     },
     "globals": {
+      "console": true,
       //allow direct access to the DOM without errors
       "document": true,
       "window": true,

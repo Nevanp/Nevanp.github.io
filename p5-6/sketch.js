@@ -14,6 +14,7 @@ let x = 0;
 let point2;
 let x2 = 5;
 let state = 0;
+let roundMin;
 
 function preload(){
   let urlAapl = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + "AAPL" + "&interval=5min&outputsize=full&apikey=KZF5VVHCEAG08NU6";
@@ -23,18 +24,20 @@ function preload(){
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  hours = hour();
-  minutes = minute();
-  let Aapl = stockOne["Time Series (5min)"]["2018-10-"+ day+ " "+ hours + ":"+ minutes +":00"];
-  let Msft = stockTwo["Time Series (5min)"]["2018-10-12 15:15:00"];
+  // let Aapl = stockOne["Time Series (5min)"]["2018-10-"+ day+ " "+ hours + ":"+ minutes +":00"];
+  // let Msft = stockTwo["Time Series (5min)"]["2018-10-12 15:15:00"];
   // print(Aapl);
   // print(Msft);
-
+  console.log(stockOne);
 }
 
 function draw() {
   hours = hour();
-  minutes = minute();
+  roundMin = minute();
+  while(roundMin % 5 !== 0){
+    roundMin --;
+  }
+  minutes = roundMin;
 
   if(state === 0){
     menu();
@@ -48,19 +51,30 @@ function draw() {
 function getStock(){
   let newPoint;
   let newPoint2;
-  for(let f = hours; f > 0; f --){
-    for(let m = minutes; m > 0; m --){
-      showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + f + ":" + m + ":" + "00"][0]["1. open"]];
+  for(let f = hours; f > 9; f --){
+    if(f === hours){
+      for(let m = minutes; m > 0; m -= 5){
+        showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + f + ":" + m + ":" + "00"]["1. open"]];
+      }
+    }
+    else{
+      for(let m = 60; m > 0; m -= 5){
+        showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + f + ":" + m + ":" + "00"]["1. open"]];
+      }
     }
   }
-  for(let i = 0; i < hours; i ++){
+  // for(let i = 0; i < 100; i ++){
+  //   showStock.push[stockOne["Time Series (5min)"][i]];
+  // }
+  for(let i = 0; i < hours*12; i ++){
     point = showStock[i];
     point2 = showStock[i ++];
-    x = x2;
     x2 += 10;
-    fill(0, 255, 0);
-    line(x, point[0], x2, point2[0]);
+    stroke(0,255,0);
+    line(x, point, x2, point2);
+    x = x2;
   }
+  // console.log(showStock);
 }
 
 
