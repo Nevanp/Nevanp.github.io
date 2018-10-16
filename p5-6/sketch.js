@@ -54,27 +54,29 @@ function getStock(){
   for(let f = hours; f > 9; f --){
     if(f === hours){
       for(let m = minutes; m > 0; m -= 5){
-        showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + f + ":" + m + ":" + "00"]["1. open"]];
+        showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + int(f) + ":" + int(m) + ":" + "00"]];//["1. open"]];
       }
     }
     else{
       for(let m = 60; m > 0; m -= 5){
-        showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + f + ":" + m + ":" + "00"]["1. open"]];
+        showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + int(f) + ":" + int(m) + ":" + "00"]];//["1. open"]];
       }
     }
   }
-  // for(let i = 0; i < 100; i ++){
-  //   showStock.push[stockOne["Time Series (5min)"][i]];
+    console.log(showStock);
+  // for(let i = 0; i < 10; i ++){
+  //   showStock.push[stockOne["Time Series (5min)"]["2018-10-12 " + hr + ":" + min + ":" + "00"]["1. open"]];
+  //   console.log(showStock);
   // }
-  for(let i = 0; i < hours*12; i ++){
-    point = showStock[i];
-    point2 = showStock[i ++];
-    x2 += 10;
-    stroke(0,255,0);
-    line(x, point, x2, point2);
-    x = x2;
-  }
-  // console.log(showStock);
+  // for(let i = 0; i < hours*12; i ++){
+  //   point = showStock[i];
+  //   point2 = showStock[i ++];
+  //   x2 += 10;
+  //   stroke(0,255,0);
+  //   line(x, point, x2, point2);
+  //   x = x2;
+  // }
+
 }
 
 
