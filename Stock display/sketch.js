@@ -49,10 +49,11 @@ function draw() { //grab current time to the nearest hour and minute and change 
   }
   else{
     background(255);
-    wait();
+    // wait();
     let i=0;
     for (let info in stockOne) {
       if (stockOne.hasOwnProperty(info)) {
+        fill(255,0,255);
         text(info + ":", width/2-200, height/2 - 100 + i);
         text(stockOne[info], width/2 + 200, height/2 - 100 + i);
       }
