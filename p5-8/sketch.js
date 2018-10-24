@@ -28,7 +28,7 @@ function ballMove(){
       ballArray[i].dx *= -1;
     }
     if(ballArray[i].y > height - ballArray[i].radius || ballArray[i].y < 0 + ballArray[i].radius){
-      ballArray[i].dy *= -1;
+      ballArray[i].dy *= -0.8;
     }
     fill(0);
     ellipse(ballArray[i].x,ballArray[i].y,ballArray[i].radius * 2);
