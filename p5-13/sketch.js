@@ -1,15 +1,20 @@
-// Grid
-// Dan Schellenberg
-// Oct 24, 2018
+// Project Title
+// Your Name
+// Date
+//
+// Extra for Experts:
+// - describe what you did to take this project "above and beyond"
 
 let rows = 10;
-let cols = 2;
+let cols = 3;
 let grid;
 let cellSize;
 let playerX;
 let enemyX;
 let enemyY;
 let speed;
+let state;
+let score;
 
 
 function setup() {
@@ -20,17 +25,29 @@ function setup() {
     createCanvas(windowHeight, windowHeight);
   }
   cellSize = width / rows;
-  grid = createRandom2dArray(cols, rows);
+  grid = makeGrid(cols, rows);
   playerX = 0;
   pickcol();
   grid[rows-1][playerX] = 2;
   speed = random(15,25);
+  state = 0;
+  score = 0;
+  noStroke();
 }
 
 function draw() {
   background(255);
-  displayGrid();
-  detect();
+  text(score, width/2, 75);
+  if(state === 1){
+    displayGrid();
+    detect();
+  }
+  else if(state === 2){
+    dead();
+  }
+  else if (state=== 0){
+    menu();
+  }
 
 }
 
@@ -40,6 +57,10 @@ function displayGrid() {
       fill(255);
       rect(x*cellSize, y*cellSize, cellSize, cellSize);
       if(grid[y][x] === 2){
+        stroke(69);
+        fill(69);
+        rect(x*cellSize,y*cellSize, cellSize, cellSize);
+        noStroke();
         fill(255,0,0);
         ellipse(x*cellSize + cellSize/2,y*cellSize + cellSize/2, cellSize/2);
       }
@@ -48,7 +69,8 @@ function displayGrid() {
         ellipse(enemyX[x]*cellSize + cellSize/2, y*cellSize + cellSize/2, cellSize/2);
       }
       else{
-        fill(255);
+        fill(69);
+        stroke(69);
         rect(x*cellSize,y*cellSize, cellSize, cellSize);
       }
     }
@@ -56,20 +78,15 @@ function displayGrid() {
   objects();
 }
 
-function createRandom2dArray(cols, rows) {
-  let randomGrid = [];
+function makeGrid(cols, rows) {
+  let newGrid = [];
   for (let y = 0; y < rows; y++) {
-    randomGrid.push([]);
+    newGrid.push([]);
     for (let x = 0; x < cols; x++) {
-      if (random(100) < 50) {
-        randomGrid[y].push(0);
-      }
-      else {
-        randomGrid[y].push(1);
-      }
+      newGrid[y].push(0);
     }
   }
-  return randomGrid;
+  return newGrid;
 }
 
 
@@ -85,12 +102,24 @@ function mouseClicked(){
 
 
 function keyTyped(){
-  if(key === "r"){
-    grid = createRandom2dArray(cols, rows);
+  if(state === 2){
+    if(key === "r"){
+      state = 1;
+      speed = 15;
+      score = 0;
+      pickcol();
+      enemyY = 0;
+    }
   }
   if(key === "c"){
     resetGrid();
   }
+  if( state === 0){
+    if(key === " "){
+      state = 1;
+    }
+  }
+
   if(playerX > 0){
     if(key === "a"){
       playerX --;
@@ -120,6 +149,7 @@ function resetGrid() {
 function pickcol(){
   enemyX = round(random(0, cols-1));
   enemyY= 0;
+  score ++;
 }
 
 function objects(){
@@ -131,12 +161,32 @@ function objects(){
   }
   else{
     pickcol();
-    speed *= 1.11;
+    speed *= 1.05;
   }
 }
 
 function detect(){
   if(enemyY >= (rows-1)*cellSize && playerX=== enemyX){
-    grid = 0;
+    state = 2;
   }
+}
+
+
+function dead(){
+  background(0);
+  textSize(75);
+  textAlign(CENTER);
+  fill(0,255,0);
+  text("GAMEOVER",width/2, height/2);
+  text("PRESS R TO RESET", width/2, height/2 + 60);
+  text(score, width/2, 75);
+}
+
+
+function menu(){
+  background(0);
+  textAlign(CENTER);
+  textSize(75);
+  fill(0,255,0);
+  text("press space to start", width/2, height/2);
 }
