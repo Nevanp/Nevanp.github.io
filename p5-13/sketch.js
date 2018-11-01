@@ -29,14 +29,16 @@ function setup() {
   playerX = 0;
   pickcol();
   grid[rows-1][playerX] = 2;
-  speed = random(15,25);
+  speed = 15;
   state = 0;
   score = 0;
-  noStroke();
 }
 
 function draw() {
   background(255);
+  if (rotationY){
+    phone();
+  }
   text(score, width/2, 75);
   if(state === 1){
     displayGrid();
@@ -57,8 +59,8 @@ function displayGrid() {
       fill(255);
       rect(x*cellSize, y*cellSize, cellSize, cellSize);
       if(grid[y][x] === 2){
-        stroke(69);
-        fill(69);
+        stroke(40);
+        fill(40);
         rect(x*cellSize,y*cellSize, cellSize, cellSize);
         noStroke();
         fill(255,0,0);
@@ -69,8 +71,8 @@ function displayGrid() {
         ellipse(enemyX[x]*cellSize + cellSize/2, y*cellSize + cellSize/2, cellSize/2);
       }
       else{
-        fill(69);
-        stroke(69);
+        fill(40);
+        stroke(40);
         rect(x*cellSize,y*cellSize, cellSize, cellSize);
       }
     }
@@ -90,17 +92,6 @@ function makeGrid(cols, rows) {
 }
 
 
-function mouseClicked(){
-  for(let y = 0; y < rows; y ++){
-    for(let x = 0; x < cols; x ++){
-      if(mouseX >= x*cellSize && mouseX <= (x + 1)* cellSize && mouseY >= y*cellSize && mouseY <= (y + 1)* cellSize){
-        grid[y][x] = 2;
-      }
-    }
-  }
-}
-
-
 function keyTyped(){
   if(state === 2){
     if(key === "r"){
@@ -111,9 +102,6 @@ function keyTyped(){
       enemyY = 0;
     }
   }
-  if(key === "c"){
-    resetGrid();
-  }
   if( state === 0){
     if(key === " "){
       state = 1;
@@ -121,7 +109,7 @@ function keyTyped(){
   }
 
   if(playerX > 0){
-    if(key === "a"){
+    if(key === "a" || key === "ArrowLeft"){
       playerX --;
       grid[rows-1][playerX]=2;
       grid[rows-1][playerX+1]=0;
@@ -129,7 +117,7 @@ function keyTyped(){
 
   }
   if(cols-1 > playerX){
-    if(key === "d"){
+    if(key === "d" || keyCode === "39"){
       playerX ++;
       grid[rows-1][playerX]=2;
       grid[rows-1][playerX-1]=0;
@@ -137,13 +125,6 @@ function keyTyped(){
   }
 }
 
-function resetGrid() {
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      grid[y][x] = 0;
-    }
-  }
-}
 
 
 function pickcol(){
@@ -161,7 +142,9 @@ function objects(){
   }
   else{
     pickcol();
-    speed *= 1.05;
+    if(speed < 100){
+      speed *= 1.01;
+    }
   }
 }
 
@@ -189,4 +172,26 @@ function menu(){
   textSize(75);
   fill(0,255,0);
   text("press space to start", width/2, height/2);
+}
+
+
+function phone(){
+  if(rotationY > 0){
+    if(playerX > 0){
+      playerX --;
+      grid[rows-1][playerX]=2;
+      grid[rows-1][playerX+1]=0;
+    }
+  }
+  if(rotationY < 0){
+    if(cols-1 > playerX){
+      playerX ++;
+      grid[rows-1][playerX]=2;
+      grid[rows-1][playerX-1]=0;
+    }
+  }
+}
+
+function touchStarted(){
+  state = 1;
 }
