@@ -176,10 +176,10 @@ function menu(){
 
 
 function phone(){
-  if(rotationY < -45){
+  if(rotationY > 70){
     playerX = 0;
   }
-  else if(rotationY > 45){
+  else if(rotationY < -70){
     playerX = 2;
   }
   else{
