@@ -44,6 +44,7 @@ function draw() {
   if (rotationY){
     phone();
   }
+  fill(255,0,255);
   text(score, width/2, 75);
   if(state === 1){
     displayGrid();
@@ -68,8 +69,6 @@ function displayGrid() {
         stroke(40);
         fill(40);
         rect(x*cellSize,y*cellSize, cellSize, cellSize);
-        noStroke();
-        fill(255,0,0);
         image(car, x*cellSize + cellSize/2,y*cellSize + cellSize/2, cellSize, cellSize);
       }
       else if(grid[y][x] === 1){
@@ -183,10 +182,10 @@ function menu(){
 
 
 function phone(){
-  if(rotationY > 45){
+  if(rotationY < -45){
     playerX = 0;
   }
-  else if(rotationY < -45){
+  else if(rotationY > 45){
     playerX = 2;
   }
   else{
