@@ -15,8 +15,13 @@ let enemyY;
 let speed;
 let state;
 let score;
+let enemy;
+let car;
 
-
+function preload(){
+  enemy = loadImage("assets/caren.png");
+  car = loadImage("assets/yourcar.png");
+}
 function setup() {
   if(windowHeight > windowWidth){
     createCanvas(windowWidth,windowWidth);
@@ -59,12 +64,13 @@ function displayGrid() {
       fill(255);
       rect(x*cellSize, y*cellSize, cellSize, cellSize);
       if(grid[y][x] === 2){
+        imageMode(CENTER);
         stroke(40);
         fill(40);
         rect(x*cellSize,y*cellSize, cellSize, cellSize);
         noStroke();
         fill(255,0,0);
-        ellipse(x*cellSize + cellSize/2,y*cellSize + cellSize/2, cellSize/2);
+        image(car, x*cellSize + cellSize/2,y*cellSize + cellSize/2, cellSize, cellSize);
       }
       else if(grid[y][x] === 1){
         fill(0,0,255);
@@ -136,7 +142,8 @@ function pickcol(){
 function objects(){
   if (enemyY<height){
     fill(0,0,255);
-    ellipse(enemyX*cellSize + cellSize/2, enemyY, cellSize/2);
+    imageMode(CENTER);
+    image(enemy,enemyX*cellSize + cellSize/2, enemyY,  cellSize, cellSize);
     let newY = floor(enemyY);
     enemyY += speed;
   }
@@ -176,10 +183,10 @@ function menu(){
 
 
 function phone(){
-  if(rotationY > 70){
+  if(rotationY > 45){
     playerX = 0;
   }
-  else if(rotationY < -70){
+  else if(rotationY < -45){
     playerX = 2;
   }
   else{
