@@ -176,22 +176,22 @@ function menu(){
 
 
 function phone(){
-  if(rotationY > 0){
-    if(playerX > 0){
-      playerX --;
-      grid[rows-1][playerX]=2;
-      grid[rows-1][playerX+1]=0;
-    }
+  if(rotationY < -45){
+    playerX = 0;
   }
-  if(rotationY < 0){
-    if(cols-1 > playerX){
-      playerX ++;
-      grid[rows-1][playerX]=2;
-      grid[rows-1][playerX-1]=0;
-    }
+  else if(rotationY > 45){
+    playerX = 2;
+  }
+  else{
+    playerX = 1;
   }
 }
 
-function touchStarted(){
-  state = 1;
+function touchMoved(){
+  if(state === 0 || state === 2){
+    state = 1;
+    speed = 15;
+    score = 0;
+    pickcol();
+  }
 }
