@@ -17,10 +17,14 @@ let state;
 let score;
 let enemy;
 let car;
+let crash;
+let engine;
 
 function preload(){
   enemy = loadImage("assets/caren.png");
   car = loadImage("assets/yourcar.png");
+  crash = loadSound("assets/carcrash.mp3");
+  engine = loadSound("assets/formula1.wav");
 }
 function setup() {
   if(windowHeight > windowWidth){
@@ -60,6 +64,9 @@ function draw() {
 }
 
 function displayGrid() {
+  if(engine.isPlaying() === false){
+    engine.play();
+  }
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       fill(255);
@@ -157,6 +164,8 @@ function objects(){
 function detect(){
   if(enemyY >= (rows-1)*cellSize && playerX=== enemyX){
     state = 2;
+    crash.play();
+    engine.stop();
   }
 }
 
@@ -184,12 +193,21 @@ function menu(){
 function phone(){
   if(rotationY < -45){
     playerX = 0;
+    grid[rows-1][playerX]=2;
+    grid[rows-1][2]=0;
+    grid[rows-1][1] = 0;
   }
   else if(rotationY > 45){
     playerX = 2;
+    grid[rows-1][playerX]=2;
+    grid[rows-1][1]=0;
+    grid[rows-1][0] = 0;
   }
   else{
     playerX = 1;
+    grid[rows-1][playerX]=2;
+    grid[rows-1][2]=0;
+    grid[rows-1][0] = 0;
   }
 }
 
