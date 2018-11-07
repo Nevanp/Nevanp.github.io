@@ -191,13 +191,13 @@ function menu(){
 
 
 function phone(){
-  if(rotationY < -45){
+  if(rotationY < -30){
     playerX = 0;
     grid[rows-1][playerX]=2;
     grid[rows-1][2]=0;
     grid[rows-1][1] = 0;
   }
-  else if(rotationY > 45){
+  else if(rotationY > 30){
     playerX = 2;
     grid[rows-1][playerX]=2;
     grid[rows-1][1]=0;
