@@ -64,9 +64,6 @@ function draw() {
 }
 
 function displayGrid() {
-  if(engine.isPlaying() === false){
-    engine.play();
-  }
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       fill(255);
@@ -78,14 +75,20 @@ function displayGrid() {
         rect(x*cellSize,y*cellSize, cellSize, cellSize);
         image(car, x*cellSize + cellSize/2,y*cellSize + cellSize/2, cellSize, cellSize);
       }
-      else if(grid[y][x] === 1){
-        fill(0,0,255);
-        ellipse(enemyX[x]*cellSize + cellSize/2, y*cellSize + cellSize/2, cellSize/2);
-      }
+
       else{
-        fill(40);
-        stroke(40);
-        rect(x*cellSize,y*cellSize, cellSize, cellSize);
+        if(x !== 1){
+          fill(40);
+          stroke(40);
+          rect(x*cellSize,y*cellSize, cellSize, cellSize);
+        }
+        else{
+          fill(40);
+          stroke(40);
+          rect(x*cellSize,y*cellSize, cellSize, cellSize);
+          fill(255);
+          rect(1*cellSize + cellSize/2- cellSize/8, y*cellSize, cellSize/4, cellSize/2);
+        }
       }
     }
   }
@@ -112,11 +115,13 @@ function keyTyped(){
       score = 0;
       pickcol();
       enemyY = 0;
+      driveSound();
     }
   }
   if( state === 0){
     if(key === " "){
       state = 1;
+      driveSound();
     }
   }
 
@@ -217,5 +222,15 @@ function touchMoved(){
     speed = 15;
     score = 0;
     pickcol();
+  }
+}
+
+
+function driveSound(){
+  if(engine.isPlaying()){
+    engine.stop();
+  }
+  else{
+    engine.loop();
   }
 }
