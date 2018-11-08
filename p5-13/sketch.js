@@ -3,6 +3,7 @@
 // Date
 //
 // Extra for Experts:
+//https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage is where I got the refernce for saving to the browser
 // - describe what you did to take this project "above and beyond"
 
 let rows = 10;
@@ -19,14 +20,21 @@ let enemy;
 let car;
 let crash;
 let engine;
+let highscore;
+let myStorage;
+let item;
+let itemY = 0;
+
 
 function preload(){
   enemy = loadImage("assets/caren.png");
   car = loadImage("assets/yourcar.png");
   crash = loadSound("assets/carcrash.mp3");
   engine = loadSound("assets/formula1.wav");
+  item = loadImage("assets/powerup.png");
 }
 function setup() {
+  myStorage = window.localStorage;
   if(windowHeight > windowWidth){
     createCanvas(windowWidth,windowWidth);
   }
@@ -41,6 +49,7 @@ function setup() {
   speed = 15;
   state = 0;
   score = 0;
+  highscore = myStorage.getItem("highscore");
 }
 
 function draw() {
@@ -53,6 +62,7 @@ function draw() {
   if(state === 1){
     displayGrid();
     detect();
+    powerUp();
   }
   else if(state === 2){
     dead();
@@ -60,6 +70,7 @@ function draw() {
   else if (state=== 0){
     menu();
   }
+  scoreDetect();
 
 }
 
@@ -233,4 +244,36 @@ function driveSound(){
   else{
     engine.loop();
   }
+}
+
+function scoreDetect(){
+  fill(255,255,0);
+  if(state === 1){
+    textAlign(CENTER);
+    textSize(50);
+    text("highscore: "+ highscore, width/2, height/2);
+  }
+  else{
+    textSize(100);
+    text("highscore: "+ highscore, width/2, height - 50);
+  }
+  if(score > highscore){
+    highscore = score;
+    myStorage.setItem("highscore", highscore);
+  }
+}
+
+
+function powerUp(){
+  let numberone = round(random(1, 100));
+  let numbertwo = round(random(1, 100));
+  if(numberone === numbertwo){
+    
+    fill(0,0,255);
+    imageMode(CENTER);
+    image(item,enemyX*cellSize + cellSize/2, itemY,  cellSize, cellSize);
+    let newY = floor(enemyY);
+    itemY += speed;
+  }
+
 }
