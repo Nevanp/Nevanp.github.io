@@ -24,6 +24,8 @@ let highscore;
 let myStorage;
 let item;
 let itemY = 0;
+let itemX = 0;
+let powerUpOn = 0;
 
 
 function preload(){
@@ -71,7 +73,7 @@ function draw() {
     menu();
   }
   scoreDetect();
-
+  text(speed, width - width/8, height - 100);
 }
 
 function displayGrid() {
@@ -155,10 +157,17 @@ function keyTyped(){
 
 
 
-function pickcol(){
-  enemyX = round(random(0, cols-1));
-  enemyY= 0;
-  score ++;
+function pickcol(type){
+  if(type === 1){
+    enemyX = round(random(0, cols-1));
+    enemyY= 0;
+    score ++;
+  }
+  else{
+    itemX = round(random(0, cols-1));
+    itemY= 0;
+    score ++;
+  }
 }
 
 function objects(){
@@ -170,7 +179,7 @@ function objects(){
     enemyY += speed;
   }
   else{
-    pickcol();
+    pickcol(1);
     if(speed < 100){
       speed *= 1.01;
     }
@@ -188,6 +197,7 @@ function detect(){
 
 function dead(){
   background(0);
+  powerUpOn = 0;
   textSize(75);
   textAlign(CENTER);
   fill(0,255,0);
@@ -265,15 +275,26 @@ function scoreDetect(){
 
 
 function powerUp(){
-  let numberone = round(random(1, 100));
-  let numbertwo = round(random(1, 100));
-  if(numberone === numbertwo){
-    
+  let numberone = round(random(1, 1000));
+  let numbertwo = round(random(1, 1000));
+  if(powerUpOn === 0 && numberone === numbertwo){
+    powerUpOn = 1;
+  }
+  if(powerUpOn ===1){
     fill(0,0,255);
     imageMode(CENTER);
-    image(item,enemyX*cellSize + cellSize/2, itemY,  cellSize, cellSize);
-    let newY = floor(enemyY);
-    itemY += speed;
+    image(item,itemX*cellSize + cellSize/2, itemY,  cellSize, cellSize);
+
+    itemY += speed/2;
   }
 
+  if(itemY >= height){
+    pickcol(2);
+    powerUpOn= 0;
+  }
+  else if(itemY >= (rows -1)* cellSize && playerX === itemX){
+    speed *= 0.9;
+    pickcol(2);
+    powerUpOn= 0;
+  }
 }
