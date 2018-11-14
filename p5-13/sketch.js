@@ -27,7 +27,7 @@ let itemY = 0;
 let itemX = 0;
 let powerUpOn = 0;
 
-
+//load images and sounds
 function preload(){
   enemy = loadImage("assets/caren.png");
   car = loadImage("assets/yourcar.png");
@@ -35,53 +35,76 @@ function preload(){
   engine = loadSound("assets/formula1.wav");
   item = loadImage("assets/powerup.png");
 }
+
+
 function setup() {
   myStorage = window.localStorage;
-  if(windowHeight > windowWidth){
-    createCanvas(windowWidth,windowWidth);
-  }
-  else{
-    createCanvas(windowHeight, windowHeight);
-  }
+  createCanvas(windowHeight, windowHeight);
   cellSize = width / rows;
+
+  //make grid
   grid = makeGrid(cols, rows);
   playerX = 0;
+
+  //set enemy x
   pickcol();
+  //make player
   grid[rows-1][playerX] = 2;
   speed = 15;
   state = 0;
   score = 0;
+  //grab highscore from computer memory
   highscore = myStorage.getItem("highscore");
 }
 
 function draw() {
   background(255);
+
+  //check if on a phone (buggy)
   if (rotationY){
     phone();
   }
+
+  //display score
   fill(255,0,255);
   text(score, width/2, 75);
+
+  //drive screen
   if(state === 1){
     displayGrid();
     detect();
     powerUp();
   }
+
+  //game over menu
   else if(state === 2){
     dead();
   }
+
+  //start menu
   else if (state=== 0){
     menu();
   }
+
+  //set highscore
   scoreDetect();
-  text(speed, width - width/8, height - 100);
+
+  //display speed
+  push();
+  textSize(50);
+  fill(255);
+  text(speed, width - width/10, height - 200);
+  pop();
 }
 
 function displayGrid() {
+  //show lines and road and player
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       fill(255);
       rect(x*cellSize, y*cellSize, cellSize, cellSize);
       if(grid[y][x] === 2){
+        //player
         imageMode(CENTER);
         stroke(40);
         fill(40);
@@ -90,6 +113,7 @@ function displayGrid() {
       }
 
       else{
+        //makes lines on road
         if(x !== 1){
           fill(40);
           stroke(40);
@@ -123,6 +147,7 @@ function makeGrid(cols, rows) {
 function keyTyped(){
   if(state === 2){
     if(key === "r"){
+      //restart
       state = 1;
       speed = 15;
       score = 0;
@@ -133,13 +158,14 @@ function keyTyped(){
   }
   if( state === 0){
     if(key === " "){
+      //start
       state = 1;
       driveSound();
     }
   }
-
+//move player
   if(playerX > 0){
-    if(key === "a" || key === "ArrowLeft"){
+    if(key === "a" ){
       playerX --;
       grid[rows-1][playerX]=2;
       grid[rows-1][playerX+1]=0;
@@ -147,7 +173,7 @@ function keyTyped(){
 
   }
   if(cols-1 > playerX){
-    if(key === "d" || keyCode === "39"){
+    if(key === "d"){
       playerX ++;
       grid[rows-1][playerX]=2;
       grid[rows-1][playerX-1]=0;
@@ -158,12 +184,14 @@ function keyTyped(){
 
 
 function pickcol(type){
+  //pick enemy x
   if(type === 1){
     enemyX = round(random(0, cols-1));
     enemyY= 0;
     score ++;
   }
   else{
+    //pick item x
     itemX = round(random(0, cols-1));
     itemY= 0;
     score ++;
@@ -171,6 +199,7 @@ function pickcol(type){
 }
 
 function objects(){
+  //display enemy + move
   if (enemyY<height){
     fill(0,0,255);
     imageMode(CENTER);
@@ -181,12 +210,13 @@ function objects(){
   else{
     pickcol(1);
     if(speed < 100){
-      speed *= 1.01;
+      speed *= 1.02;
     }
   }
 }
 
 function detect(){
+  //see if enemy is touching player
   if(enemyY >= (rows-1)*cellSize && playerX=== enemyX){
     state = 2;
     crash.play();
@@ -196,6 +226,7 @@ function detect(){
 
 
 function dead(){
+  //death menu + reset settings
   background(0);
   powerUpOn = 0;
   textSize(75);
@@ -208,6 +239,7 @@ function dead(){
 
 
 function menu(){
+  //menu
   background(0);
   textAlign(CENTER);
   textSize(75);
@@ -217,6 +249,7 @@ function menu(){
 
 
 function phone(){
+  // movement with phone tilt (buggy)
   if(rotationY < -30){
     playerX = 0;
     grid[rows-1][playerX]=2;
@@ -238,6 +271,7 @@ function phone(){
 }
 
 function touchMoved(){
+  //start/restart on phone
   if(state === 0 || state === 2){
     state = 1;
     speed = 15;
@@ -248,6 +282,7 @@ function touchMoved(){
 
 
 function driveSound(){
+  //make sound loop
   if(engine.isPlaying()){
     engine.stop();
   }
@@ -257,6 +292,7 @@ function driveSound(){
 }
 
 function scoreDetect(){
+  //change  highscores
   fill(255,255,0);
   if(state === 1){
     textAlign(CENTER);
@@ -275,6 +311,7 @@ function scoreDetect(){
 
 
 function powerUp(){
+  //move and display powerup
   let numberone = round(random(1, 1000));
   let numbertwo = round(random(1, 1000));
   if(powerUpOn === 0 && numberone === numbertwo){
@@ -285,7 +322,7 @@ function powerUp(){
     imageMode(CENTER);
     image(item,itemX*cellSize + cellSize/2, itemY,  cellSize, cellSize);
 
-    itemY += speed/2;
+    itemY += speed/1.25;
   }
 
   if(itemY >= height){
@@ -293,7 +330,7 @@ function powerUp(){
     powerUpOn= 0;
   }
   else if(itemY >= (rows -1)* cellSize && playerX === itemX){
-    speed *= 0.9;
+    speed *= 0.95;
     pickcol(2);
     powerUpOn= 0;
   }
